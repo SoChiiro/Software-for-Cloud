@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:server": "ts-node index.js"
+    "dev:server": "ts-node index.js",
+    "start": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js"
   },
   "author": "",
   "license": "ISC",

@@ -6,10 +6,6 @@ const noteSchema = new Schema({
     required: true
   },
   content: String,
-  user: { 
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  }
 });
 
 const Models = model('Note', noteSchema);

@@ -6,9 +6,9 @@ import {
 
 const router = Router();
 
-router.get('/', getNotes); 
+router.get('/note', getNotes); 
 
-router.post('/', createNote);
+router.post('/note', createNote);
 
 // router.get('/:id', getNote);
 
@@ -16,4 +16,4 @@ router.post('/', createNote);
 
 // router.delete('/:id', deleteNote);
 
-export default router;
+module.exports = router
