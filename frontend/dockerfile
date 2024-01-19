@@ -1,0 +1,25 @@
+# Étape de construction de l'application React
+FROM node:latest as build
+
+WORKDIR /app
+
+COPY . .
+RUN npm install
+
+# COPY public ./public
+# COPY src ./src
+
+# Assurez-vous que la commande build pointe vers le dossier correct
+RUN npm run build
+
+# Étape suivante pour servir l'application React avec Nginx
+FROM nginx:latest
+
+# Copiez les fichiers buildés depuis l'étape précédente dans le dossier approprié de Nginx
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Déclaration du port sur lequel Nginx écoutera
+EXPOSE 80
+
+# Commande pour démarrer Nginx lors du lancement du conteneur
+CMD ["nginx", "-g", "daemon off;"]

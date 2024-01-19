@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eagle-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eagle-backend
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: eagle-backend
+        tier: backend
+    spec:
+      containers:
+        - name: eagle-backend
+          image: sochiiro/eagledreamback:5
+          ports:
+            - name: http
+              containerPort: 3000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eagle-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eagle-frontend
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: eagle-frontend
+        tier: frontend
+    spec:
+      containers:
+        - name: eagle-frontend
+          image: "sochiiro/eagledreamfront:1"
+          ports:
+            - name: http
+              containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: eagle-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: eagle-backend
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP
+
+
