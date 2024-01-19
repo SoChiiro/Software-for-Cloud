@@ -1,0 +1,33 @@
+# docker-compose
+version: "3.8"
+
+services:
+
+  app:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env  
+    depends_on:
+      - db
+    command: sh -c "sleep 10 && node ./src/app.js"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: eagledreamdb
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: eagledreamdb
+      MYSQL_ROOT_PASSWORD: root  
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/initdb:/docker-entrypoint-initdb.d
+    ports:
+      - "3307:3307"
+
+volumes:
+  mysql_data:
