@@ -8,7 +8,7 @@ Eagle Dream est une application web permettant d'afficher des données récupér
 
 - Une base de données MySql pour stocker les données
 
-Ces différents services sont containerisés avec Docker et déployés sur Kubernetes pour facilité l'orchestration et la mise à l'échelle.
+Ces différents services sont containerisés avec Docker et déployés sur Kubernetes pour facilité l'orchestration et la mise à l'échelle. 
 
 ## Pourquoi ces choix techniques
 
@@ -16,7 +16,7 @@ React : pour la simplicité et la performance de développement du frontend
 
 Node.js : pour la rapidité de développement des API avec JavaScript
 
-MySQL : base de données relationnelle permettant un stockage structuré et un accès performant aux données
+MySQL : base de donnée relationnelle permettant un stockage structuré et un accès performant aux données
 
 Docker : pour containeriser les services et simplifier le déploiement
 
@@ -36,9 +36,11 @@ Pour commencer nous avons dû créer une image docker et la publier sur docker h
 
 ![image](https://github.com/EagleDreamAPP/eagleDreamBackend/assets/73187667/388b003b-efc5-4e19-a2d3-e8c7c12a96e9)
 
+Ces deux images peuvent être directement déployées localement grâce à notre `docker-compose.yml`.
+
 ### Création de service et deployement
 
-Pour créer un déploiement de service kubernetes, à la manière de docker compose, nous devons rédiger un fichier `.yaml`
+Pour créer un déploiement de service kubernetes, à la manière de docker compose, nous devons rédiger un fichier `.yaml`. Ce fichier nous permettra de déployer nos services automatiques. Pour cela il faut le définir comme ci-dessous.
 
 ```yaml
 apiVersion: apps/v1
@@ -69,7 +71,7 @@ Pour mieux comprendre ce fichier, on peut se pencher sur ses différentes partie
 - Il faut déclarer que ce service sera un deploiement, c'est ce que l'on retrouve à la ligne `kind: Deployment`
 - La partie spec représente les spécificités du service (nombre de réplique, récupération d'image, attribution de port pour notre container etc.)
 
-Nous récupérons directement les images que nous avions créées et push précédement sur le docker desktop.
+Nous récupérons directement les images que nous avions créées et push précédement sur le docker desktop et au docker compose. Utiliser les deux à la fois permet d'optimiser plus facilement nos services.
 
 
 Passons à la partie service :
@@ -89,7 +91,7 @@ spec:
 
 ```
 
-Ce fichier définit le service Kubernetes, spécifiant le sélecteur, les ports, et le type de service.
+Ce fichier définit un service Kubernetes, spécifiant le sélecteur, les ports, et le type de service, ici on défini un `ClusterIP`.
 
 On peut observer sur cette capture que notre service backend (eagle-backend) a bien été déployé : 
 
@@ -164,7 +166,7 @@ Nous avons commencé à hébergé le service sur le port `80` :
 ![image](https://github.com/EagleDreamAPP/eagleDreamBackend/assets/73226823/4cadee3f-2d66-4661-8797-c3a2a72904c1)
 
 Ce fichier nous permet de créer un accès extérieur à notre application. Par exemple nous avons décidé d'héberger notre application sur le lien `http:eagledream.info` et cela avec différents chemins : 
-- `/` qui permet d'accéder direcement à notre frontend-service
+- `/` qui permet d'accéder directement à notre frontend-service lors de l'accès à l(url.
 - `/another-service` pour accéder directement à notre backend.
 
 ![image](https://github.com/EagleDreamAPP/eagleDreamBackend/assets/73226823/8be96054-cae1-4966-b4af-81dca04070c7)
@@ -222,18 +224,19 @@ Nicolas :
 
 Thomas : 
 ![image](https://github.com/EagleDreamAPP/eagleDreamBackend/assets/73187667/9f9aeb45-9635-4b1e-8b3f-4aa8ae714467)
+(PS : Thomas n'a que 70 au dernier TP, car il a eu un problème lors de sa réalisation, vous êtes venu l'aider, mais cela n'a pas aidé à le résoudre.)
 
 
 ## Conclusion
 
-Ce projet nous a permis de mettre en pratique nos connaissances en déploiement d'applications web avec Kubernetes.
+Ce projet nous a permis de mettre en pratique nos connaissances en déploiement d'applications web avec Kubernetes et ainsi déployer notre propre application.
 
 Nous avons pu :
 
-- Containeriser une application React et Node.js avec Docker
-- Déployer ces conteneurs sur un cluster Kubernetes
-- Configurer des services et un ingress pour exposer les applications
-- Connecter les services à une base de données MySQL
+- Containeriser une application React et Node.js avec `Docker`.
+- Déployer ces conteneurs sur un cluster `Kubernetes`.
+- Configurer des services et `Ingress` pour exposer les applications.
+- Connecter les services à une base de données `MySQL`.
 
 Kubernetes s'est révélé être un outil puissant pour orchestrer nos conteneurs. Sa flexibilité nous a permis d'itérer rapidement sur notre architecture à mesure que de nouveaux besoins émergeaient.
 
